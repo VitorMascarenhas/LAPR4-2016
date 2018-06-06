@@ -1,0 +1,45 @@
+@startuml doc-files/ipc04_01_design_02.png
+actor User
+create ImportAction as ImpAct
+User -> ImpAct:  actionPerformed(ActionEvent event)
+create ImportChooser as ImpCh
+ImpAct -> ImpCh:  showDialog(...,focusOwner, uiController)
+create openJFileChooser as openJCh
+note right of ImpCh
+        The user selects a file...
+end note
+ImpCh -> openJCh: returnVal = showOpenDialog(ImportChooser.this);
+alt resultVal==JOptionPane.OK_OPTION
+    ImpCh -> openJCh : fileName = getSelectedFile().getName();
+    ImpCh -> openJCh : dir = getCurrentDirectory().toString();
+else
+end
+note right of User
+        The user enter a delimiter and if the file has a header
+end note
+create JOptionPane as JOpt
+ImpCh -> JOpt : result=showConfirmDialog(...);
+alt result==JOptionPane.YES_OPTION && delimiter != "" && fileName != ""
+    create ImportExportTextStrategy as IETStr
+    ImpCh -> IETStr : create(delimiter,dir,fileName,header);
+    ImpCh -> IETStr : ImportFromTextFile(focusOwner, uiController);
+    IETStr -> IETStr : lstString = readFile();
+    create FocusOwner as focus
+    IETStr -> focus : initRow = getSelectRow();
+    IETStr -> focus : initCol = getSelectColum();
+    loop i < lstString.size()
+        loop j < lstString.get(0).size()
+        create UIController as ctrl
+        IETStr -> ctrl : spread1 = getActiveSpreedsheet();
+        create ActiveSpreadsheet as Spread
+        IETStr -> Spread : cell1=getCell(initCol,iniRow);
+        create Cell
+	IETStr -> Cell : setContent(listString.get(i).get(j));
+        end
+    end
+note right of IETStr
+        The File Text is imported to the Spreadsheet
+end note
+else
+end
+@enduml

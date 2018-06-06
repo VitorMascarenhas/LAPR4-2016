@@ -1,0 +1,16 @@
+@startuml doc-files/ipc04_01_Analysis_02.png
+
+actor User 
+participant "<<analysis>>\nUI" as UI
+participant "<<analysis>>\nExportUI" as exUI
+participant "<<analysis>>\nExportCtrl" as ctrl
+participant "<<analysis>>\nExportFile" as file
+participant "<<analysis>>\nSpreadSheet" as spread
+User -> UI : select export file
+UI -> exUI : open()
+exUI -> User : ask for information
+User -> exUI : choose file, delimiter and if header
+exUI -> ctrl : exportFile(file,delimiter,header)
+ctrl -> spread : list = getCllectedCells(delimiter)
+ctrl -> file : exportFile(file,header,list)
+@enduml

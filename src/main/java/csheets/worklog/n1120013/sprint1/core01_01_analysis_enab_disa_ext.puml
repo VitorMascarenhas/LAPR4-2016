@@ -1,0 +1,19 @@
+@startuml doc-files/enable_disable_extensions_analysis.png
+  actor User
+  participant ExtensionsManagerAction as EMA
+  participant checkBoxList as CKBL
+  participant "this.uiController : UIController" as UIC
+  participant "ExtensionsManager : Extensions" as em
+
+    User -> EMA : actionPerformed(ActionEvent event)
+    EMA -> CKBL : createCheckBox(...)
+    CKBL -> UIC : listAllExtensions()
+    UIC -> em :getAllExtensionList()
+    em --> UIC : listExtensions()
+    UIC --> CKBL: listAllExtensions()
+    alt result==checkboxList.OK_Button
+        CKBL -> em : enableChekedExtensions();
+        CKBL -> em : disableUnchekedExtensions();
+    else
+ end
+@enduml

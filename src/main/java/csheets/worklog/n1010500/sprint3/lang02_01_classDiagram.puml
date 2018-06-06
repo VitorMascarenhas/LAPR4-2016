@@ -1,0 +1,18 @@
+@startuml doc-files/lang02_01_classDiagram.png
+interface Cell
+interface Expression
+class CellImpl{
+    -HashMap<String,Value> tempVariablesList;
+    +setVarValue(String name, Value value);
+    +getTempVariablesList() : HashMap<String,Value>
+}
+class TempVariable{
+    -String name;
+    +TempVariable(String name,CellImpl cell);
+    +evaluate() : Value;
+    +setValue(Value v);
+}
+TempVariable -|> Expression
+Cell <|- CellImpl
+TempVariable --> CellImpl
+@enduml

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ExchangeRates>
+    <ExchangeRate>
+        <From>Dollar</From>
+        <To>Euro</To>
+        <Value>0.89249855</Value>
+    </ExchangeRate>
+    <ExchangeRate>
+        <From>Pound</From>
+        <To>Euro</To>
+        <Value>1.26002945</Value>
+    </ExchangeRate>
+    <ExchangeRate>
+        <From>Pound</From>
+        <To>Dollar</To>
+        <Value>1.4178</Value>
+    </ExchangeRate>
+</ExchangeRates>

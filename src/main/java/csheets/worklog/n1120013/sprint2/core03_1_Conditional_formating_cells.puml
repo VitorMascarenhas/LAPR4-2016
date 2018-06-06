@@ -1,0 +1,18 @@
+@startuml doc-files/cell_conditional_format.png
+  actor User
+  participant ConditionalFormatAction as CFA
+  participant "this.uiController : UIController" as UIC
+  participant "JColorChooser : ColorChooser" as CCH
+  participant "focusOwner : focusOwner" as fo
+
+    User -> CFA : actionPerformed(ActionEvent event)
+    CFA -> UIC : getColors()
+    UIC -> CCH :JColorChooser()
+    CCH -> fo : selectColor_true()
+    CCH -> fo : selectColor_false()
+    alt cell.getFormula().evaluate().toBoolean()
+        fo --> UIC : setBackGroundColor(colort);
+        else
+        fo --> UIC : setBackGroundCOlor(colorf);
+ end
+@enduml

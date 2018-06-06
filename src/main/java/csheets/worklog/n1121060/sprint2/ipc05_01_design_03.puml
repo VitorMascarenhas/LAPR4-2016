@@ -1,0 +1,40 @@
+@startuml doc-files/ipc05_01_design_03.png
+
+    participant "SendChatMessagePannel : JPanel" as cp
+    participant "SendChatMessageController : Observer" as ctrl
+    participant "ConnectionManager : Obervable, Observer" as conMgr
+    participant "TcpServerConnection : Observable,Runnable" as tcpS
+    participant "Message : Serializable"  as msg
+    participant "ChatMessage : Serializable"  as chatMsg
+
+    tcpS -> tcpS : run()
+    loop while true    
+        note right of cp
+            User receives a message from a remote instance...
+        end note
+
+        tcpS -> tcpS : setChanged()
+        tcpS -> tcpS : notifyObservers(Message msg)
+
+    end
+
+    note right of conMgr
+        ConnectionManager is observing all created instances of TcpServerConnection
+        The call to notifyObservers on TcpServerConnection triggers the update method on
+        ConnectionManager
+    end note
+
+    tcpS -> conMgr : update(TcpServerConnection, Message msg)
+    conMgr -> conMgr : setChanged()
+    conMgr -> conMgr : notifyObservers(msg)
+
+    note right of ctrl
+        SendChatMessageController is observing ConnectionManager
+        The call to notifyObservers on ConnectionManager triggers the update method on
+        SendChatMessageController
+    end note
+    
+    conMgr -> ctrl : update(ConnectionManager, Message msg)
+
+    ctrl -> cp : displayPopup(chatMessage)
+@enduml

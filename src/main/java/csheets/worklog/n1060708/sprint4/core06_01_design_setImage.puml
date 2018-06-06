@@ -1,0 +1,21 @@
+  @startuml doc-files/core06_01_design_setImage.png
+  participant UIExtensionImages as uiExtImages
+  participant ImagesPanel as imgPanel
+  participant ImagesController as imgc
+  participant UIController as uic
+  participant Cell as cell
+  participant ImageableCell as imageableCell
+  
+  uiExtImages -> imgPanel : new();
+  imgPanel -> imgc : new ImagesController();
+  imgPanel -> imgc : addSelectionListener();
+  imgc -> uic : addSelectionListener();
+  uic -> imgPanel : selectionChanged();
+  imgPanel -> cell : (ImageableCell)getExtension(ImagesExtension.NAME);
+  imgPanel -> imageableCell : addImageableCellListener();
+  imgPanel -> imgPanel : imagesChanged();
+  imgPanel -> imgc : cellSelected();
+  imgc -> imgPanel : setImage();
+  imgPanel -> imgPanel : updateList();
+  imgPanel -> imgPanel : updateImage();
+  @enduml

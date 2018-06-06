@@ -1,0 +1,62 @@
+@startuml doc-files/ipc05_02_classDiagram.png
+
+class ConfigurationManager
+class ConnectionManager extends Observable implements Observer
+
+class ConnectionManager{
+     -UdpClient udpClient
+     -UdpServer udpServer
+     -TcpServer tcpServer
+     -ConfigurationManager cfgManager
+
+    + {static} synchronized ConnectionManager getInstance()
+    
+}
+
+enum MessageType
+class Message implements Serializable{
+    - final MessageType messageType;
+
+    - final Object content;
+    
+    - InetAddress address;
+}
+
+
+class ChatParticipants implements Serializable{
+    - final String nick;
+    - final String text;
+}
+
+class TcpServer implements Runnable
+
+class TcpServerConnection extends Observable implements Runnable
+
+class TcpClientConnection
+
+class UdpClient extends Observable implements Runnable
+
+class SendChatParticipantsController implements Observer, Serializable
+
+class SendChatParticipantsExtension extends Extension
+
+class SendChatParticipantsPanel extends javax.swing.JPanel
+
+
+ConnectionManager *-- TcpServer
+ConnectionManager *-- UdpServer
+ConnectionManager *-- UdpClient
+ConnectionManager *-- TcpClientConnection
+ConnectionManager *-- ConfigurationManager
+
+TcpServer o-- TcpClientConnection
+
+SendChatParticipantsController *-- ConnectionManager
+SendChatParticipantsPanel *-- SendChatParticipantsController
+
+
+Message o-- MessageType
+
+
+
+@enduml

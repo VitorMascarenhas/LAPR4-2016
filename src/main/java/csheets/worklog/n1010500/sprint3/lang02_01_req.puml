@@ -1,0 +1,7 @@
+@startuml doc-files/lang02_01_req.png
+actor User 
+participant System
+User -> System : selects a cell
+User -> System : enters a formula which creates and uses a temporary variable
+System -> User : show the result with a temporary variable evaluated on Cell
+@enduml

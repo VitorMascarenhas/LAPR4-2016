@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Tags>
+    <Tag>
+        <TagName>Robotics</TagName>
+    </Tag>
+    <Tag>
+        <TagName>Customer</TagName>
+    </Tag>
+	<Tag>
+        <TagName>Vendor</TagName>
+    </Tag>
+    <Tag>
+        <TagName>Prospect</TagName>
+    </Tag>
+	<Tag>
+        <TagName>Landscaping</TagName>
+    </Tag>
+    <Tag>
+        <TagName>Developer</TagName>
+    </Tag>
+	<Tag>
+        <TagName>Analyst</TagName>
+    </Tag>
+</Tags>

@@ -1,0 +1,23 @@
+@startuml doc-files/ipc01_01_design_04.png
+participant UdpClient as UdpClient <<runnable>>
+
+-> UdpClient : create(udpPort)
+create "udpSocket:datagramSocket" as DS1
+UdpClient -> DS1: create(udpPort);
+UdpClient -> UdpClient: byte[] data = this.DISCOVERMESSAGE.getBytes();
+loop
+create "request:DatagramPacket" as DP1
+UdpClient -> DP1: create(data, data.length, iNetAddress, this.udpPort);
+UdpClient -> DP1: udpSocket.send(request)
+loop
+UdpClient -> UdpClient: byte[] receiveBuffer = new byte[this.DISCOVERRESPONSE.length()];
+create "response:datagramPacket" as DP2
+UdpClient -> DP2: create(receibeBuffer, receiveBuffer.length);
+UdpClient -> UdpClient: udpSocket.receive(response);
+UdpClient -> UdpClient: messageFromServer = new String(response.getData()).trim();
+opt [if messageFromServer == this.DISCOVERRESPONSE]
+UdpClient -> UdpClient: this.remoteInstances.add(response.getAddress().getHostAddress()
+end opt
+end loop
+end loop
+@enduml

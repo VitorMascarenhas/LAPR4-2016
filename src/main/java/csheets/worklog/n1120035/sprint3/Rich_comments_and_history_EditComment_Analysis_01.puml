@@ -1,0 +1,15 @@
+  @startuml doc-files/Rich_comments_and_history_EditComment_Analysis_01.png
+  
+  actor User 
+  participant "<<analysis>>\nEditCommentUI" as UI
+  participant "<<analysis>>\nEditCommentCtrl" as ctrl
+  participant "<<analysis>>\nCommentableCell" as domain
+  participant "<<analysis>>\nComment" as domain1
+  User -> UI : run()
+  UI -> ctrl : run()
+  ctrl -> domain : getCommentableCell()
+  domain -> domain1 : getComment()
+  ctrl -> domain : editComment()
+  ctrl -> UI : returnEditComment()
+
+  @enduml

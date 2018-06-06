@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Extension>
+    <Name>ConditionalFormatExtension</Name>
+    <Versions>
+        <VersionNumber>1.0</VersionNumber>
+        <Description>ConditionalFormatExtension to conditional format cell style</Description>
+    </Versions>
+</Extension>

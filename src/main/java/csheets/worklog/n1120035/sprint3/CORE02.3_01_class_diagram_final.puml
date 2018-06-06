@@ -1,0 +1,146 @@
+  @startuml doc-files/CORE02.3-Class_Diagram_final.png
+
+class Comment
+
+class Comment {
+    private int id;
+    private String comment;
+    private Calendar calendar;
+    private String author;
+    private Font font;
+    private Format format;
+    public Comment(String comment, Font font, Format format);
+    public Comment(int id, String comment, Font font, Format format);
+    public int returnCommentId();
+    public void setCommentId(int id);
+    public String toString();
+    public String returnComment();
+    public String returnCommentDate();
+    public String returnAuthor();
+}
+
+Class CommentableCell
+
+class CommentableCell extends CellExtension {
+    private static final long serialVersionUID = 1L;
+    private List<Comment> comments;
+    private transient List<CommentableCellListener> listeners = new ArrayList<CommentableCellListener>();
+    public CommentableCell(Cell cell);
+    public String getUserComment();
+    public boolean hasComment();
+    public void setUserComment(String comment, Font font, Format format);
+    public void setEditUserComment(int id, String commentStr, Font font, Format format);
+    public int maxId();
+    public int commentSize();
+    public void addCommentableCellListener(CommentableCellListener listener);
+    public void removeCommentableCellListener(CommentableCellListener listener);
+    protected void fireCommentsChanged();
+    private void readObject(java.io.ObjectInputStream stream);
+    public void styleChanged(Cell cell);
+    public List<Comment> returnAllComments();
+    public int returnNumberOfId(int id);
+}
+
+Class CommentableCell
+
+interface CommentableCellListener extends EventListener {
+    public void commentChanged(CommentableCell cell);
+}
+
+Class CommentsExtension
+
+class CommentsExtension extends Extension {
+    public static final String NAME = "Comments";
+    public CommentsExtension();
+    public CommentableCell extend(Cell cell)M
+    public UIExtension getUIExtension(UIController uiController);
+}
+
+Class CommentController
+
+class CommentController {
+    private UIController uiController;
+    private CommentPanel uiPanel;
+    public CommentController(UIController uiController, CommentPanel uiPanel);
+    public boolean setComment(CommentableCell cell, String comment, StylableCell scell);
+    public void cellSelected(CommentableCell cell);
+}
+
+Class CommentPanel
+
+class CommentPanel extends JPanel implements SelectionListener, CommentableCellListener, ActionListener {
+    private CommentController controller;
+    private UIController uiController;
+    private CommentableCell cell;
+    private JTextArea commentField = new JTextArea();
+    private JTextArea allComments = new JTextArea();
+    private JButton btnAdd;
+    private JButton btnSE;
+    private JDialog jDialog;
+    public CommentPanel(UIController uiController);
+    CommentPanel();
+    public void selectionChanged(SelectionEvent event);
+    public void commentChanged(CommentableCell cell);
+    public void setCommentText(String text);
+    public void actionPerformed(ActionEvent e);
+}
+
+Class CommentedCellDecorator
+
+class CommentedCellDecorator extends CellDecorator {
+    private static final Font font = new Font("Dialog", Font.PLAIN, 10);
+    public CommentedCellDecorator();
+    public void decorate(JComponent component, Graphics g, Cell cell, boolean selected, boolean hasFocus);
+}
+
+Class UIExtensionComments
+
+class UIExtensionComments extends UIExtension {
+    private CellDecorator cellDecorator;
+    private JComponent sideBar;
+    public UIExtensionComments(Extension extension, UIController uiController);
+    public Icon getIcon();
+    public JMenu getMenu();
+    public CellDecorator getCellDecorator();
+    public TableDecorator getTableDecorator();
+    public JToolBar getToolBar();
+    public JComponent getSideBar();
+}
+
+Class EditCommentPanel
+
+class EditCommentPanel extends javax.swing.JPanel {
+    private UIController uiControoler;
+    private JDialog jDialog;
+    private EditCommentsController editCommentsController;
+    private Comment comment;
+    public EditCommentPanel(UIController uiController, EditCommentsController editCommentsController, JDialog jDialog, Comment comment);
+}
+
+Class EditCommentController
+
+class EditCommentsController {
+    private UIController uiController;
+    public EditCommentsController(UIController uiController);
+    public void editComment(String commentText);
+}
+
+Class SearchCommentsController
+
+class SearchCommentsController {
+    private UIController uiController;
+    public SearchCommentsController(UIController uiController);
+    public DefaultListModel searchForExpression(String text);
+}
+
+Class SearchEditCommentPanel
+
+class SearchEditCommentPanel extends JPanel {
+    private UIController uiController;
+    private JDialog jDialog;
+    private SearchCommentsController scc;
+    private JDialog jDialogEdit;
+    public SearchEditCommentPanel(UIController uiController, JDialog jDialog);
+}
+
+  @enduml

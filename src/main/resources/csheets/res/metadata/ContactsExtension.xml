@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Extension>
+    <Name>ContactEditionExtension</Name>
+    <Versions>
+        <VersionNumber>1.0</VersionNumber>
+        <Description>ContactEditionExtension to check the contact and the agenda of them</Description>
+    </Versions>
+</Extension>

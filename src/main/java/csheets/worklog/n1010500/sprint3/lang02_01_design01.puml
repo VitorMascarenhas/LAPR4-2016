@@ -1,0 +1,23 @@
+@startuml doc-files/lang02_01_design01.png
+    participant "User"
+    participant "Cell" as Cell
+    participant "ExcelExpressionCompiler" as ExcelExp
+    User -> Cell : inserts a tempVAR in a formula to a cell
+    Cell -> ExcelExp : tVar = compile(this, this.content)
+    create "input : ANTLRStringStream" as ANTLR
+    ExcelExp -> ANTLR : input = create(source)
+    create "lexer : FormulaLexer" as lexer
+    ExcelExp -> lexer : create(input)
+    create "tokens : CommonTokenStream" as tokens
+    ExcelExp -> tokens : create(lexer)
+    create "parser : FormulaParser" as parser
+    ExcelExp -> parser : create(tokens)
+    ExcelExp -> parser : (CommonTree)tree = expression().getTree()
+    ExcelExp -> ExcelExp : convert(cell,tree)
+    opt [if node.getType() == FormulaLexer.TEMP_VAR]
+    create "tVar : TempVariable" as tVar
+    ExcelExp -> tVar : create(node.getText(),(CellImpl) cell)
+    end opt
+    Cell -> tVar : value = evaluate()
+    Cell -> User : show value
+@enduml

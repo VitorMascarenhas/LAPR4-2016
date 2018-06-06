@@ -1,0 +1,39 @@
+@startuml doc-files/core01_01_analysis_enable_disable_extensions_1.png
+    
+    class ExtensionManager {
+        +ExtensionManager getInstance() 
+        +Extension[] getExtensions() 
+    }
+
+    interface Comparable {
+    }
+    interface Extensible {
+        +T getExtension(String name);
+    }
+    interface Serializable{
+    }
+    interface Cell {
+        +CellListener[] getCellListeners()
+    }
+    class CellImpl {
+        -transient Map<String, CellExtension> extensions;
+        +Cell getExtension(String name);
+    }
+    class CellExtension {
+    }
+    interface CellListenner {
+    }
+    class "<<analysis>> EnableExtensions" as EnableExtensions {
+    }
+
+    Extensible <|-- Cell
+    Comparable <|-- Cell
+    Serializable <|-- Cell
+    Cell <.. CellImpl
+    CellListenner <|-- CellExtension
+    CellImpl o- CellExtension
+    ExtensionManager <-- EnableExtensions
+    CellImpl <-- EnableExtensions
+
+@enduml
+

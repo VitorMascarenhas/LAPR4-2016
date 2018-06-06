@@ -1,0 +1,58 @@
+@startuml doc-files/core03_02_design_01.png
+
+actor User as u
+participant "SpreadsheetTable : Grid" as sheet
+participant "SpreadSheetPopupHandler : PopupHandler" as sheetpop
+participant "PopupHandler : MouseAdapter" as pop
+participant "SubMenu : JPopupMenu" as submenu
+participant "CustomSortAction : FocusOwnerAction" as s
+participant "CustomSortDialog : JDialog" as d
+participant "CellRangeSort" as sort
+
+create sheetpop
+    sheet -> sheetpop : pop = create()
+
+create submenu
+    pop -> submenu : create()
+
+pop -> pop : buildMenu()
+pop -> submenu : createBaseItems()
+
+create s
+    submenu -> s : customSort = new()
+submenu -> submenu : add(customSort())
+
+sheet -> sheet : addMouseListener(pop)
+
+note left of sheet
+        User selects a range of cells
+end note
+
+note left of sheet
+        User right clicks on the spreadsheet
+end note
+
+sheetpop -> sheetpop : doPop()
+
+note left of sheet
+        User selects CustomSortAction from the popup menu
+end note
+
+create d
+    s->d : new()
+s->d : setVisible(true)
+
+note left of sheet
+        User selects the column and the sort direction
+end note
+
+create sort
+    d -> sort : new(selectedCells, sortDirection)
+d -> sort : sort(columnIndex)
+
+
+note left of sort
+        TODO: document setting the sorted values back to the spreadsheet
+end note
+
+@enduml

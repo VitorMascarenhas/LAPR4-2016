@@ -1,0 +1,88 @@
+@startuml doc-files/ipc04_01_Design_CD.png
+    
+    interface Extension
+    interface UIExtension 
+    interface JMenu
+    interface FocusOwnerAction
+    interface BaseAction
+    interface JComponent
+    interface ImportExportStrategy {
+        + exportToFile(SpreadsheetTable focusOwner)
+        + importFromFile(SpreadsheetTable focusOwner, UIController uiController)
+    }
+    
+    class ImportExportMenu{
+        +ImportExportMenu(UIController uiController)
+    }
+
+    class ExportAction{
+        +ExportAction(UIController uiController)
+        #String getName()
+        #defineProperties()
+        +actionPerformed(ActionEvent event)
+    }
+    
+    class ImportAction{
+        +ImportAction(UIController uiController)
+        #String getName()
+        #defineProperties()
+        +actionPerformed(ActionEvent event)
+    }
+
+    class ImportChooser{
+        -JTextField fileName
+        -JTextField header
+        -JTextField delimiter
+        -JTextField dir
+        -JCheckBox headerBox
+        -JButton open
+        +{static}showDialog(Component parent, String title, SpreadsheetTable focusOwner)
+    }
+    
+    class ExportChooser{
+        -JTextField fileName
+        -JTextField header
+        -JTextField delimiter
+        -JTextField dir
+        -JCheckBox headerBox
+        -JButton open
+        +{static}showDialog(Component parent, String title, SpreadsheetTable focusOwner, UIController uiController)
+    }
+
+    class ImportExportExtension{
+        +{static}String NAME = "Import Export"
+        +UIExtension getUIExtension(UIController uiController)
+    }
+
+    class UIExtensionImportExport{
+        +UIExtensionImportExport(Extension extension, UIController uiController)
+        +Icon getIcon()
+        +JMenu getMenu()
+    }
+
+    class ImportExportTextStrategy{
+        -String delimiter
+        -String dir
+        -String filename
+        -boolean header
+        +ImportExportTextStrategy(String delimiter, String dir, String filename, boolean header)
+        +exportToFile(SpreadsheetTable focusOwner)
+        +importFromFile(SpreadsheetTable focusOwner, UIController uiController)
+        -readFile()
+    }
+    
+    JComponent <|-- ImportChooser
+    JComponent <|-- ExportChooser
+    Extension <|-- ImportExportExtension
+    UIExtension <|-- UIExtensionImportExport
+    JMenu <|-- ImportExportMenu
+    FocusOwnerAction <|-- ExportAction
+    FocusOwnerAction <|-- ImportAction
+    BaseAction <|-- FocusOwnerAction
+    ImportExportMenu --> ExportAction
+    ImportExportMenu --> ImportAction
+    ImportExportTextStrategy --|> ImportExportStrategy
+    ImportExportTextStrategy "1" --* ExportChooser
+    ImportExportTextStrategy "1" --* ImportChooser
+@enduml
+

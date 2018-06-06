@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Professions>
+    <Profession>
+        <ProfessionName>Accountant</ProfessionName>
+    </Profession>
+    <Profession>
+        <ProfessionName>Engineer</ProfessionName>
+    </Profession>
+    <Profession>
+        <ProfessionName>Farmer</ProfessionName>
+    </Profession>
+    <Profession>
+        <ProfessionName>Journalist</ProfessionName>
+    </Profession>
+    <Profession>
+        <ProfessionName>Electrician</ProfessionName>
+    </Profession>
+    <Profession>
+        <ProfessionName>Nurse</ProfessionName>
+    </Profession>
+    <Profession>
+        <ProfessionName>Postman</ProfessionName>
+    </Profession>
+    <Profession>
+        <ProfessionName>Teacher</ProfessionName>
+    </Profession>
+    <Profession>
+        <ProfessionName>Fire fighter</ProfessionName>
+    </Profession>
+    <Profession>
+        <ProfessionName>Photographer</ProfessionName>
+    </Profession>
+</Professions>

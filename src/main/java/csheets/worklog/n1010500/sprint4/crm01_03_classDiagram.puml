@@ -1,0 +1,85 @@
+@startuml doc-files/crm01_03_classDiagram.png
+interface Extension
+interface ITag{
+    boolean isValid()
+    String tagName()
+    boolean update(ITag tag)
+    Long id()
+}
+interface ITagsOperationRead{
+    Set<ITag> read()
+}
+class SearchContactsByTagsExtension{
+    + {static} String NAME = "SearchContactsByTags"
+    + UIExtension getUIExtension(UIController uiController) 
+}
+class ListTagsExtension{
+    + {static} String NAME = "ListTags"
+    + UIExtension getUIExtension(UIController uiController)
+}
+class JpaRepository
+class JpaTagsRepository{
+    - {static} String PERSISTENCE_NAME="csheets_lapr4"
+    # String persistenceUnitName()
+    + updateTag(Tag tag)
+    + boolean add(Tag tag)
+    + long size()
+    + Tag findById(Long id)
+    + Tag update(Tag tag)
+    + void remove(Tag selectedTag)
+}
+class TagFactory{
+    + Tag newTag(String name)
+}
+
+class Tag{
+    - Long id
+    - String name
+    - int count
+    + Tag(String name)
+    + String tagName()
+    + Long id()
+    + boolean update(ITag tag)
+    + boolean isValid()
+    + int getCount()
+    + void setCount(int count)
+    + int compareTo(Object o)
+}
+class Contact{
+    + Set<ITag> tags()
+    + boolean addTag(ITag tag)
+    + boolean removeTag(ITag tag)
+}
+class SearchContactsByTagsController{
+    + List<IContact> getContacts(String ex)
+}
+class TagsController {
+    + boolean createTag(String tag)
+    + Set<ITag> getAllTags()
+    + ITag findTag(Long tagToFindId)
+    + saveTagToEditOrUpdate(ITag tag)
+    + List<IContact> getAllContacts()
+}
+class TagsTableModel{
+    - {static} string[] COLUMNS = {"Tag", "Frequency"}
+    - String[][] data
+    + TagsTableModel(Set<ITag> tags, List<IContact> contacts)
+    + calculateFrequency()
+    + int getRowCount()
+    + int getColumnCount()
+    + Object getValueAt(int rowIndex, int columnIndex)
+    + Long getSelectedTagId(int row)
+}
+TagsTableModel "1" *-- "many" Contact : contains
+TagsTableModel "1" *-- "many" Tag : contains
+AbstractTableModel <|-- TagsTableModel
+TagsController "1" *-- "many" Contact : contains
+TagsController "1" *-- "many" Tag : contains
+TagsController "1" *-- ITagRepository
+Contact "1" *-- "many" Tag : contains
+SearchContactsByTagsController "1" *-- "many" Contact : contains
+Extension <|-- ListTagsExtension
+Extension <|-- SearchContactsByTagsExtension
+JpaRepository <|-- JpaTagsRepository
+ITag <|-- Tag
+@enduml

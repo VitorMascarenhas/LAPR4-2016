@@ -1,0 +1,16 @@
+@startuml doc-files/ipc01_01_ClassDiagram.png
+
+class UdpServer
+
+class UdpServer {
+	private DatagramSocket udpSocket;
+        private boolean isToRun = false;
+        private final String DISCOVERMESSAGE = "DISC2NA";
+        private final String DISCOVERRESPONSE = "DISCACK2NA";
+        private byte[] data;
+	public UdpServer(int udpPort);
+        public void run();
+}
+
+
+@enduml

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Extension>
+    <Name>ImportExportExtension</Name>
+    <Versions>
+        <VersionNumber>1.0</VersionNumber>
+        <Description>ImportExportExtension to import or export a extension</Description>
+    </Versions>
+</Extension>

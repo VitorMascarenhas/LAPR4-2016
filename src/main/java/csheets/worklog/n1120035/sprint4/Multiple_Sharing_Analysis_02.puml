@@ -1,0 +1,24 @@
+  @startuml doc-files/Rich_comments_and_history_Analysis_02.png
+  
+  actor User 
+  participant "<<analysis>>\naddCommentUI" as UI
+  participant "<<analysis>>\naddCommentCtrl" as ctrl
+  participant "<<analysis>>\ncommentBuilder" as builder
+  participant "<<analysis>>\nAuthor" as author
+  participant "<<analysis>>\nCommentDate" as cmntdate
+  participant "<<analysis>>\nCommentStyle" as cmntstyle
+  participant "<<analysis>>\nCommentFormat" as cmntformat
+  participant "<<analysis>>\nCommentsHistory" as cmnthistory
+  participant "<<analysis>>\nComment" as cmnt
+  User -> UI : run()
+  UI -> ctrl : new controller()
+  ctrl -> builder : run()
+  builder -> author : new author()
+  builder -> cmntdate : new commentdate()
+  builder -> cmntstyle : new commentdate()
+  builder -> cmntformat : new commentformat()
+  builder -> cmnt : create()
+  builder -> ctrl : returnComment()
+  ctrl -> cmnthistory : saveComment()
+
+  @enduml

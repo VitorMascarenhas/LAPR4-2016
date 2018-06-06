@@ -1,0 +1,19 @@
+@startuml doc-files/ipc04_01_design_01.png
+  participant "uic : UIController" as UIC
+  participant ExtensionManager as ExtM
+  participant "extension : ImportExportExtension" as Extension
+  participant "uiExtension : UIExtensionImportExport" as UIExt
+  UIC -> ExtM : extensions=getExtensions();
+  loop for Extension ext : extensions
+  	UIC -> Extension : uiExtension=getUIExtension(this);
+  	activate Extension
+  	create UIExt
+  	Extension -> UIExt : new(extension, uic)
+        deactivate Extension
+  	UIExt -> UIExt : getIcon();
+  	activate UIExt
+        UIExt -> UIExt : getMenu();
+  	deactivate UIExt
+  	UIC -> UIC : uiExtensions.add(uiExtension);
+  end
+  @enduml

@@ -1,0 +1,12 @@
+@startuml doc-files/ipc05_02_analysis_chatParticipants_disconect_cli.png
+actor User as u
+  participant "<<analysis>>\nSendChatParticipantsUI" as UI
+  participant "<<analysis>>\nSendChatParticipantsCtrl" as ctrl
+  participant "<<analysis>>\nConnectionManager" as conMgr
+  u -> UI : start()
+  UI -> ctrl : disconectMsg()
+  loop getconnections() conections
+      ctrl -> conMgr : sendGoodbyeMsg()
+      ctrl -> conMgr : disconect()
+  end loop
+@enduml

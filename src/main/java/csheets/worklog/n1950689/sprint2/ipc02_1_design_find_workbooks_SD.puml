@@ -1,0 +1,54 @@
+@startuml doc-files/ipc02_1_design_find_workbooks_SD.png
+
+actor User
+participant "FindWorkbooksPanel" as fwPanel
+participant "list : JList" as JL
+participant "<<observer>>\nFindWorkbooksController" as fwCtrl
+participant "<<observerable>>\nFindWorkbooks" as fw
+participant "FilenameFilter" as fFilter
+participant "path : File" as path
+
+User -> fwPanel : select FindWorkbooks sidebar
+activate fwPanel
+    create fwCtrl
+    fwPanel -> fwCtrl : create()
+    create JL
+    fwPanel -> JL : create()
+    fwPanel --> User : show JPanel
+    User -> fwPanel : enter directory path
+    User -> fwPanel : click 'Find Workbooks'
+    fwPanel -> fwCtrl : findWorkbooks(path)
+    activate fwCtrl
+        create fw
+        fwCtrl -> fw : create(path)
+        fwCtrl -> fw : addObserver(this)
+        fwCtrl -> fw : run()
+        activate fw
+            create fFilter
+            fw -> fFilter : create()
+            fw -> path : listFiles()
+            fw -> fwCtrl : notifyObservers()
+        deactivate fw
+        fwCtrl -> fwPanel : addFilesToList(File[])
+        activate fwPanel
+        loop while File not isDirectory
+            fwPanel -> JL : addElement()
+        end
+        deactivate fwPanel
+        fwCtrl -> fwPanel : searchDir(File[])
+        activate fwPanel
+        loop while File isDirectory
+            fwPanel -> fwCtrl : findWorkbooks(path)
+            fwPanel -> fwCtrl : findWorkbooks(path)
+            activate fwCtrl
+                create fw
+                fwCtrl -> fw : create(path)
+                fwCtrl -> fw : addObserver(this)
+                fwCtrl -> fw : run()
+            deactivate fw
+            end
+        deactivate fwPanel
+    deactivate fwCtrl
+deactivate fwPanel
+
+@enduml

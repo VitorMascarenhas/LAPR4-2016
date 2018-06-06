@@ -1,0 +1,18 @@
+@startuml doc-files/core03_03_auto_sorting_CD.png
+
+package "csheets.ui" {
+    class "CustomSortDialog" as csd
+    class "asl : AutomaticSortListener" as asl
+    class "column : JComboBox" as jcbc
+    class "order : JComboBox" as jcbo
+}
+package "csheets.core" {
+    class "Spreadsheet" as ss
+    class "cell : Cell" as c
+}
+csd ..> asl
+csd ..> jcbc
+csd ..> jcbo
+ss o- c
+c o- asl
+@enduml

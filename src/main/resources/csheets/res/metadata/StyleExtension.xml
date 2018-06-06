@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Extension>
+    <Name>StyleExtension</Name>
+    <Versions>
+        <VersionNumber>1.0</VersionNumber>
+        <Description>StyleExtension for text/font style</Description>
+    </Versions>
+    <Versions>
+        <VersionNumber>1.1</VersionNumber>
+        <Description>StyleExtension for text/font style. Contains blue color in this version</Description>
+    </Versions>
+</Extension>

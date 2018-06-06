@@ -1,0 +1,18 @@
+@startuml doc-files/ipc05_01_analysis_send_message.png
+actor User as u
+  participant "<<analysis>>\nSendChatMessageUI" as UI
+  participant "<<analysis>>\nSendChatCtrl" as ctrl
+  participant "<<analysis>>\nConnectionManager" as conMgr
+  u -> UI : start()
+  ctrl -> conMgr : getInstance()
+  ctrl -> conMgr : connect()
+  conMgr -> ctrl : foundRemoteInstances()
+  ctrl -> UI : updateRemoteInstances()
+  u -> UI : selectRemoteInstance()
+  UI -> ctrl : selectRemoteInstance()
+  ctrl -> conMgr : connectTo(remoteInstance)
+  u -> UI : sendMessage()
+  UI -> ctrl : sendMessage()
+  ctrl -> conMgr : sendMessage(Message)
+ 
+@enduml

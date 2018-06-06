@@ -1,0 +1,73 @@
+@startuml doc-files/ipc05_01_design_02.png
+    participant "uic: UIController" as uic
+    participant "uiExtension : UIExtensionComments" as UIExt
+    participant "SendChatMessagePannel : JPanel" as cp
+    participant "SendChatMessageController : Observer" as ctrl
+    participant "ConnectionManager : Obervable, Observer" as conMgr
+    participant "UdpClient : Obervable, Runnable" as udpC
+    participant "UdpServer : Runnable" as udpS
+    participant "TcpServer : Runnable" as tcpS
+    participant "TcpClientConnection"  as tcpC
+    participant "Message : Serializable"  as msg
+    participant "ChatMessage : Serializable"  as chatMsg
+
+    create cp
+        UIExt -> cp :  new(uic)
+    create ctrl
+        cp -> ctrl : new(uic) 
+    
+    ctrl -> conMgr : getInstance()
+    ctrl -> conMgr : addObserver(this)
+    ctrl -> conMgr : connect()
+
+    create udpC
+        conMgr -> udpC : new(udpPort, timeout)
+    create tcpS
+        conMgr -> tcpS : new(tcpPort)
+        conMgr -> tcpS : start()
+        tcpS -> tcpS : startServer()
+
+    create udpS
+        conMgr -> udpS : new(udpPort)
+        conMgr -> udpS : start
+        udpS -> udpS : run()
+        
+    conMgr -> udpC : addObserver(this)
+
+    loop while true
+    
+        udpC -> udpC : run()
+
+        udpC -> conMgr : update(Observable o, Object arg)
+
+        conMgr -> ctrl : update(Observable o, Object arg)
+
+    end
+
+    note right of cp
+        User connects to a remote instance...
+    end note
+
+    ctrl -> conMgr : connectTo(String remoteAddress)
+    
+    create tcpC
+        conMgr -> tcpC : new(remoteAddress, port)
+
+    
+    note right of cp
+        User send a message to a remote instance...
+    end note
+    
+    create chatMsg
+        ctrl -> chatMsg: chat = new(int id, String text, int parentId)
+
+    create msg
+        ctrl -> msg : msg = new(MessageType type, ChatMessage chatMsg, InetAddress localhost)
+
+    ctrl -> conMgr : send(msg)
+
+    loop for all connected tcp clients
+        conMgr -> tcpC : send(msg)
+
+    end
+@enduml

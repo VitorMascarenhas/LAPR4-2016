@@ -1,0 +1,16 @@
+@startuml doc-files/ipc05_02_analysis_chatParticipants_helloMessage.png
+actor User as u
+  participant "<<analysis>>\nSendChatParticipantsUI" as UI
+  participant "<<analysis>>\nSendChatParticipantsCtrl" as ctrl
+  participant "<<analysis>>\nConnectionManager" as conMgr
+  u -> UI : start()
+  UI -> ctrl : start()
+  ctrl -> conMgr : getInstance()
+  ctrl -> conMgr : connect()
+  conMgr -> ctrl : foundRemoteInstances()
+loop for Instance inst : Instances
+  ctrl -> conMgr : connectTo(remoteInstance)
+  ctrl -> conMgr : sendHelloMessageTo(remoteInstance)
+end loop
+ 
+@enduml

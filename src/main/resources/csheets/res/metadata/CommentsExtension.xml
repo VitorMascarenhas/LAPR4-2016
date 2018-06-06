@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Extension>
+    <Name>CommentsExtension</Name>
+    <Versions>
+        <VersionNumber>1.0</VersionNumber>
+        <Description>CommentsExtension to insert cells comments</Description>
+    </Versions>
+</Extension>

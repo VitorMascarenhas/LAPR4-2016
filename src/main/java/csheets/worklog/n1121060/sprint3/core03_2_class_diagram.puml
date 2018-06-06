@@ -1,0 +1,26 @@
+@startuml doc-files/core03_2_classDiagram.png
+
+
+class PopupHandler extends MouseAdapter
+class SpreadsheetTable extends Grid
+class SpreadSheetPopupHandler extends PopupHandler
+
+class CellRangeSort {
+    +sort()
+    +sort(int columnIndex)
+}
+class CustomSortAction extends FocusOwnerAction
+
+class CustomSortDialog extends JDialog
+
+class SubMenu extends JPopupMenu
+CustomSortAction *-- CustomSortDialog
+
+
+PopupHandler *--SubMenu
+
+SpreadsheetTable*--SpreadSheetPopupHandler
+SubMenu *-- CustomSortAction
+CustomSortDialog *-- CellRangeSort
+
+@enduml

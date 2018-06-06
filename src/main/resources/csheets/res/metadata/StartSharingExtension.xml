@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Extension>
+    <Name>StartSharingExtension</Name>
+    <Versions>
+        <VersionNumber>1.0</VersionNumber>
+        <Description>StartSharingExtension for sharing cells</Description>
+    </Versions>
+</Extension>

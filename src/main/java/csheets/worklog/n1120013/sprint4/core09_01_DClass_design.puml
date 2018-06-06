@@ -1,0 +1,57 @@
+@startuml doc-files/core09_01_Class_design.png
+
+class ChartController{
+-UIController uiController;
++ChartController(UIController uiController)
++void startWizard(String name)
++void initialize(Wizard wizard)
++Cell[][] getSelectedCells()
++String getSelectedRange()
++Cell chartableCell()
++Chart createChart(String name, Cell[][] cells, boolean lineLabel, boolean rowLabel)
++Chart getChart()
++Chart setChart()
+}
+class Wizard extends JDialog{
+-ChartController chartController
+Wizard(String title, ChartController chartController)
+}
+class CellExtension {
+-Cell delegate;
+-String name;
++CellExtension(Cell delegate, String name)
+}
+class ChartableCell extends CellExtension{
+-Chart userChart;
+#ChartableCell(Cell cell)
+--
++Chart getCellChart()
++boolean hasChart()
++void setChart(Chart chart)
+...
+}
+class Chart{
+-String name
+-Cell[][] cellsRange
+-boolean lineLabel
+-boolean rowLabel
++Chart(name, cellsRange, boolean lineLabel, boolean rowLabel)
+}
+abstract class CellDecorator{
+#boolean enabled
++CellDecorator()
++abstract void decorate(JComponent component, Graphics g, Cell cell,
+			boolean selected, boolean hasFocus)
++final boolean isEnabled()
++final void setEnabled(boolean enabled)
+}
+class ChartedCellDecorator extends CellDecorator{
++ChartedCellDecorator()
++void decorate(JComponent component, Graphics g, Cell cell,
+               boolean selected, boolean hasFocus)
+}
+ChartableCell --> Chart: has
+ChartedCellDecorator --> ChartableCell: decorate
+ChartController ---> Wizard: create
+Wizard --> Chart: create
+@enduml

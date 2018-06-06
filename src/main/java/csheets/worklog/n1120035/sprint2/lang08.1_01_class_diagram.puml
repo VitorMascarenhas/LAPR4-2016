@@ -1,0 +1,46 @@
+@startuml doc-files/lang08.1_Class_Diagram.png
+
+class ExportFile
+    
+class ExportFile {
+    private FileType fileType;
+    private File file;
+    
+    public ExportFile();
+    public void createFile(File file, List<String> content);
+}
+
+class ExportFileController
+
+class ExportFileController {    
+    private final UIController uiController;
+    private FileType fileType = new ToXML();
+    private ExportFilePanel exportFilePanel;
+    
+    public ExportFileController(UIController uiController, ExportFilePanel exportFilePanel);
+    public List<String> createXmlWithWorkbook(String workbook, String spreadsheet, String cell);
+    public List<String> createXmlWithSpreadsheet(SpreadsheetImpl spread, String workbook, String spreadsheet, String cell);
+    public List<String> createXmlWithCells(Cell[][] cells, String workbook, String spreadsheet, String cell);
+    public Cell[][] getCells();
+    protected String getName();
+}
+
+interface FileType
+
+interface FileType {
+    
+    public List<String> exportWorkbook(Workbook workbook, String wb, String ss, String c);
+    public List<String> exportSpreadSheets(SpreadsheetImpl spreadSheets, String wb, String ss, String c);
+    public List<String> exportCells(Cell[][] cells, String wb, String ss, String c);
+}
+
+class ToXML
+
+class ToXML implements FileType {
+
+    public List<String> exportWorkbook(Workbook workbook, String w, String s, String c);
+    public List<String> exportSpreadSheets(SpreadsheetImpl spreadSheet, String w, String s, String c);
+    public List<String> exportCells(Cell[][] cells, String w, String s, String c);
+}
+
+@enduml

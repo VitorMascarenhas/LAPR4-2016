@@ -1,0 +1,10 @@
+@startuml doc-files/crm01_03_req2.png
+actor User 
+participant System
+User -> System : select ListTags in view->sidebars
+System -> User : system displays a list of tags sorted by frequency
+loop
+User -> System : enter a new tag and select a "create tag" button
+System -> User : System inform about the operation sucess
+end
+@enduml

@@ -1,0 +1,12 @@
+  @startuml doc-files/core01_01_analysis.png
+  participant ActivateExtUI as AEUI
+  participant "aec : ActivateExtController" as AEC
+  participant ExtensionManager as ExtM
+  participant Extension as Ext
+  AEUI -> AEC : extensions=getExtensions();
+  AEC -> ExtM : extensions=getExtensions();
+  loop for Extension ext : extensions
+  	AEUI -> AEC : activateExt(bool);
+  	AEC -> Ext : activateExt(bool);
+  end
+  @enduml

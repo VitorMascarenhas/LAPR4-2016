@@ -1,0 +1,15 @@
+@startuml doc-files/crm01_03_design02.png
+    participant "User"
+    participant "SearchContactsByTagsUI" as UI
+    User -> UI : Search Contacts By Tags Feature
+    create "SearchContactsByTagsController" as ctrl
+    UI -> ctrl : create()
+    User -> UI : search(exToSearch)
+    UI -> UI : createContactsTableData()
+    UI -> ctrl : Lst = getContacts(exToSearch)
+    participant "contactRepository" as rep
+    ctrl -> rep : Lst = all()
+    create "ContactsTableModel" as table
+    UI -> table : create(Lst)
+    UI -> User : Show Tags table
+@enduml

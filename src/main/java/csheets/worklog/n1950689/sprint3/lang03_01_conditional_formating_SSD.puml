@@ -1,0 +1,16 @@
+@startuml doc-files/lang03_01_conditional_formating_SSD.png
+
+actor USER as usr
+participant "ui : ConditionalFormatPanel" as ui
+
+usr -> ui : start cell conditional format
+activate ui
+ui --> usr : ask COLOR
+usr -> ui : insert COLOR
+ui --> usr : ask FONT
+usr -> ui : insert FONT
+ui --> usr : ask BORDER
+usr -> ui : insert BORDER
+usr -> ui : apply condition settings
+deactivate ui
+@enduml

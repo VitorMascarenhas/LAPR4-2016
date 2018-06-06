@@ -1,0 +1,13 @@
+@startuml doc-files/core06_01_analysis.png
+actor User 
+  participant ImagesUI as UI
+  participant ImagesCtrl as ctrl
+  participant Cell as cell
+  User -> UI : selectCell()
+  UI -> ctrl : returnAllImages()
+  ctrl -> cell : returnAllImages()
+  UI -> UI : showImages()
+  User -> UI : dialogSelectImage()
+  UI -> ctrl : addImage()
+  ctrl -> cell : addImage()
+@enduml

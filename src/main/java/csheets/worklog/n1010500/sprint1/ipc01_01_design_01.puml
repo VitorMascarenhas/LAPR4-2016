@@ -1,0 +1,20 @@
+@startuml doc-files/ipc01_01_design_01.png
+  participant "uic : UIController" as UIC
+  participant ExtensionManager as ExtM
+  participant "extension : StartSharingExtension" as Extension
+  participant "uiExtension : UIExtensionStartSharing" as UIExt
+  participant "StartSharingPanel : JPanel" as ssp
+  UIC -> ExtM : extensions=getExtensions();
+  loop for Extension ext : extensions
+  	UIC -> Extension : uiExtension=getUIExtension(this);
+  	activate Extension
+  	create UIExt
+  	Extension -> UIExt : new(extension, uic)
+  	UIExt -> UIExt : getSideBar();
+  	activate UIExt
+  	create ssp
+  	UIExt -> ssp :  new (uic)  	
+  	deactivate UIExt
+  	UIC -> UIC : uiExtensions.add(uiExtension);
+  end
+  @enduml

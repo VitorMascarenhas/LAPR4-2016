@@ -1,0 +1,14 @@
+@startuml doc-files/ipc02_1_analysis_find_workbook_SSD.png
+actor User
+participant "ExtensionSearchWorkbookUI" as ESWUI
+
+
+User -> ESWUI : initiate search workbook extension
+ESWUI --> User : ask search root directory
+User -> ESWUI  : insert search root directory
+ESWUI --> User : show file found
+ESWUI --> User : search complete
+User -> ESWUI : select file
+ESWUI --> User : show opened Workbook
+
+@enduml

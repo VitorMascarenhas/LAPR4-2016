@@ -1,0 +1,12 @@
+@startuml doc-files/ipc05_02_analysis_chatParticipants_disconect_ser.png
+actor User as u
+  participant "<<analysis>>\nSendChatParticipantsUI" as UI
+  participant "<<analysis>>\ndataBase" as DB
+  participant "<<analysis>>\nSendChatParticipantsCtrl" as ctrl
+  participant "<<analysis>>\nConnectionManager" as conMgr
+  
+  conMgr -> ctrl : receiveGoodbyeMessage()
+  ctrl -> DB : setuseroffline()
+  ctrl -> UI : setuseroffline()
+
+@enduml

@@ -1,0 +1,11 @@
+@startuml doc-files/core03_03_auto_sorting_SSD.png
+
+actor user
+participant "CustomSortDialog" as csd
+
+user -> csd : initiate automatic sorting
+csd --> user : show options
+user -> csd : select column and order
+user -> csd : set automatic sorting
+csd --> user : show sorting action
+@enduml

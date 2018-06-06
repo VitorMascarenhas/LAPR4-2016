@@ -1,0 +1,18 @@
+  @startuml doc-files/ExportXML_Analysis_01.png
+  
+  actor User 
+  participant "<<analysis>>\nExportXmlUI" as UI
+  participant "<<analysis>>\nExportXmlCtrl" as ctrl
+  participant "<<analysis>>\nCreateFile" as srv
+  participant "<<analysis>>\nFileType" as type
+  participant "<<analysis>>\nToXml" as file
+  User -> UI : run()
+  UI -> ctrl : run()
+  ctrl -> srv : List<SpreadSheets> convertData(WorkBook)
+  ctrl -> type : new FileType()
+  type -> file : new file
+  file -> ctrl : String[] allBytes()
+  ctrl -> srv : create(String name, String bytes)
+  ctrl -> UR : return()
+
+  @enduml

@@ -1,0 +1,44 @@
+@startuml doc-files/lang03_01_conditional_formating_CD.png
+
+package "csheets.ui.ctrl" {
+    class "UIController" as uic
+}
+
+
+package "csheets.core.formula.compiler" {
+    class "ExcelExpressionCompiler" as eec
+}
+
+package "csheets.core.formula" {
+    class "Expression" as expr
+}
+
+package "csheets.core" {
+    class "Cell" as c
+    class "Value" as v
+}
+package "csheets.ext.style" {
+    class "StylableCell" as sc
+}
+
+package "csheets.lang.conditionalformat.ui" {
+    class "ConditionalFormatPanel" as ui
+    class "ConditionalFormatController" as ctrl
+    class "ConditionalFormat" as cf
+    class "CondFormEscuta" as cfe
+}
+
+ui *- ctrl
+ctrl ..> uic
+uic ..> c
+ctrl ..> cfe
+ctrl ..> cf
+cfe ..> eec
+cfe ..> expr
+expr ..> v
+cfe *- cf
+cf ..> sc
+
+
+
+@enduml

@@ -1,0 +1,52 @@
+@startuml doc-files/ipc01_01_ClassDiagram.png
+
+class ConfigurationManager
+class ConnectionManager extends Observable implements Observer
+
+class ConnectionManager{
+     -UdpClient udpClient
+     -UdpServer udpServer
+     -TcpServer tcpServer
+     -ConfigurationManager cfgManager
+
+    + {static} synchronized ConnectionManager getInstance()
+    
+}
+enum MessageType
+class Message implements Serializable{
+    - final MessageType messageType;
+
+    - final Object content;
+    
+    - InetAddress address;
+}
+
+class StartSharingController extends FocusOwnerAction implements Observer, Serializable
+
+class StartSharingExtension extends Extension
+
+class StartSharingPanel extends javax.swing.JPanel
+
+class TcpServer implements Runnable
+
+class TcpServerConnection extends Observable implements Runnable
+
+class TcpClientConnection
+
+class UdpClient extends Observable implements Runnable
+
+class UdpServer implements Runnable
+
+ConnectionManager *-- TcpServer
+ConnectionManager *-- UdpServer
+ConnectionManager *-- UdpClient
+ConnectionManager *-- TcpClientConnection
+ConnectionManager *-- ConfigurationManager
+
+TcpServer o-- TcpClientConnection
+Message o-- MessageType
+
+StartSharingController *-- ConnectionManager
+StartSharingPanel *-- StartSharingController
+
+@enduml

@@ -1,0 +1,21 @@
+@startuml doc-files/core09_01_analysis_associate_chart_to_cell.png
+
+actor User as user
+participant "<<analysis>>\nChartsUI" as ui
+participant "<<analysis>>\nChartsUICtrl" as ctrl
+participant "<<analysis>>\nSpreadsheet" as sheet
+participant "<<analysis>>\nCell" as cell
+
+user -> ui: associate(chart)
+activate ui
+
+ui -> ctrl: associate(chart)
+activate ctrl
+
+ctrl -> sheet: getCellsRange()
+ctrl -> sheet: getCell(topLeftCellFromRange)
+
+ctrl -> cell: associateChartToCell(cellToAssociate, chart)
+cell -> cell: associateChart()
+
+@enduml

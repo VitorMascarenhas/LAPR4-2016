@@ -1,0 +1,17 @@
+  @startuml doc-files/lang08.1_ExportXml_sequence_diagram_final.png
+  
+  actor User 
+  participant "ExportFilePanel" as UI
+  participant "ExportFileController" as ctrl
+  participant "ExportFile" as domain
+  participant "FileType" as domain1
+  participant "ToXml" as domain2
+  User -> UI : run()
+  UI -> ctrl : run()
+  ctrl -> domain : new exportFile()
+  domain -> domain1 : createXmlWithWorkbook()
+  domain1 -> domain2 : createXmlWithWorkbook()
+  domain2 -> ctrl : return content()
+  ctrl -> UI : createFile()
+
+@enduml

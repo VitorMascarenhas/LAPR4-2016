@@ -1,0 +1,14 @@
+  @startuml doc-files/ipc01_02_analysis_adding_cell_listeners.png
+  participant Actor as Actor
+  participant StartingSharingPanel as ui
+  participant StartSharingController as controller
+  participant CellImpl as cImpl
+  Actor -> ui : connectAction();
+  ui -> controller : connectTo();
+  Actor -> ui : selectCellsToUpdate();
+  Actor -> ui : startAutomaticSharing();
+  ui -> controller : addCellListeners();
+  loop for CellListener lst : listeners
+  	controller -> cImpl : addCellListener();
+  end
+  @enduml

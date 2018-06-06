@@ -1,0 +1,50 @@
+@startuml doc-files/ipc01_01_design_03.png
+
+    participant "StartSharingPannel : JPanel" as cp
+    participant "StartSharingController : Observer" as ctrl
+    participant "ConnectionManager : Obervable, Observer" as conMgr
+    participant "TcpServerConnection : Observable,Runnable" as tcpS
+    participant "Message : Serializable"  as msg
+    participant "CellValueObject : Serializable"  as vo
+    participant "Spreadsheet : Iterable<Cell>, Extensible<Spreadsheet>,Serializable " as sheet
+    participant "UIController" as UIC
+    participant "Cell" as c
+
+    tcpS -> tcpS : run()
+    loop while true    
+        note right of cp
+            User receives cells from a remote instance...
+        end note
+
+        tcpS -> tcpS : setChanged()
+        tcpS -> tcpS : notifyObservers(Message msg)
+
+    end
+
+    note right of conMgr
+        ConnectionManager is observing all created instances of TcpServerConnection
+        The call to notifyObservers on TcpServerConnection triggers the update method on
+        ConnectionManager
+    end note
+
+    tcpS -> conMgr : update(TcpServerConnection, Message msg)
+    conMgr -> conMgr : setChanged()
+    conMgr -> conMgr : notifyObservers(msg)
+
+    note right of ctrl
+        StartSharingController is observing ConnectionManager
+        The call to notifyObservers on ConnectionManager triggers the update method on
+        StartSharingController
+    end note
+    
+    conMgr -> ctrl : update(ConnectionManager, Message msg)
+
+    ctrl -> cp : handleCells(List<CellValueObject> cells)
+
+    cp -> UIC : sheet = getActiveSpreadsheet()
+
+    loop from each received cell
+        cp -> sheet : cell = sheet.getCell(vo.getAddress())
+        cp -> c : setContent(vo.getValue())
+    end
+@enduml

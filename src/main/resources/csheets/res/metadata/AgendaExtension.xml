@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Extension>
+    <Name>AgendaExtension</Name>
+    <Versions>
+        <VersionNumber>1.0</VersionNumber>
+        <Description>AgendaExtension to check the agenda of a specific contact</Description>
+    </Versions>
+</Extension>

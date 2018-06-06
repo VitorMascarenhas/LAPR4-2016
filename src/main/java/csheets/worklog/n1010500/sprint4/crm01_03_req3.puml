@@ -1,0 +1,16 @@
+@startuml doc-files/crm01_03_req3.png
+actor User 
+participant System
+User -> System : open new contact window
+User -> System : insert firt and last name
+loop
+System -> User : list all tags avaliable
+User -> System : associate tag
+end
+System -> User : list all profession avaliable
+User -> System : select profession
+System -> User : list all company contacts
+User -> System : select company contact
+User -> System : Confirm creation of contact
+System -> User : inform User about success of operation
+@enduml

@@ -1,0 +1,12 @@
+@startuml doc-files/ipc05_01_analysis_receive_message.png
+actor User as u
+  participant "<<analysis>>\nSendChatMessageUI" as UI
+  participant "<<analysis>>\nSendChatCtrl" as ctrl
+  participant "<<analysis>>\nConnectionManager" as conMgr
+  
+  conMgr -> ctrl : receivedMessage()
+  ctrl -> UI : receivedMessage()
+  UI -> UI : updateMessageTree()
+  UI -> u : showMessagePopUp()
+ 
+@enduml

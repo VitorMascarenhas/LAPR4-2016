@@ -1,0 +1,16 @@
+@startuml doc-files/ipc02_1_analysis_find_workbook_CD.png
+
+class "<<analysis>>\nExtensionSearchWorkbookUI" as ESWUI
+class "<<analysis>>\nExtensionSearchWorkbookController" as ESWCtrl
+class "<<analysis>>\nSearchExtension" as SE
+class "Spreadsheet" as Ss
+class "path : Path" as path
+class "f : File" as f
+
+ESWUI ..> ESWCtrl
+ESWCtrl ..> SE
+ESWCtrl ..> Ss
+SE ..> path
+path ..> f
+@enduml
+

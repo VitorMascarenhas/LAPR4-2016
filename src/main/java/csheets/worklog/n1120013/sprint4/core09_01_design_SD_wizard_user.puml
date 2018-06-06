@@ -1,0 +1,47 @@
+@startuml doc-files/core09_01_design_SD_wizard_user.png
+
+actor User as user
+
+participant "WizardChartCreation\nJPanel" as wz_data
+participant "WizardPreviewChart\nJPanel" as wz_preview
+
+participant "ChartCtrl" as ctrl
+participant "Chart" as chart
+
+user -> wz_data: start()
+wz_data -> user: showPanel()
+activate wz_data
+
+user -> wz_data: insertChartTitle(title)
+user -> wz_data: selectCellsRange(cellsRange)
+user -> wz_data: insertLineRowLabel(lineLabel, RowLabel)
+user -> wz_data: next()
+
+wz_data -> wz_preview: showPanel()
+activate wz_preview
+wz_preview -> wz_preview: generateGraphPreview(chart)
+wz_preview --> user: showGraphPreview()
+
+
+alt if finish()
+
+user -> wz_preview: finish()
+wz_preview -> ctrl: create(name,cellsRange,lineLabel, RowLabel)
+deactivate wz_preview
+
+activate ctrl
+create chart
+ctrl -> chart: create(name,cellsRange,lineLabel, RowLabel)
+deactivate ctrl
+
+else if back()
+
+user -> wz_preview: back()
+wz_preview --> wz_data: showPanel()
+activate wz_data
+deactivate wz_preview
+
+end alt
+
+
+@enduml

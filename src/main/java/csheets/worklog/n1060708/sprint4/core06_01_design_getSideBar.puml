@@ -1,0 +1,15 @@
+  @startuml doc-files/core06_01_design_getSideBar.png
+  participant UIController as uic
+  participant ExtensionManager as extM
+  participant ImagesExtension as iExt
+  participant UIExtensionImages as uiExtImages
+  participant ImagesPanel as imgPanel
+  uic -> extM : getExtensions();
+
+  loop for Extension ext : getExtensions()
+        uic -> iExt : getUIExtension();
+        iExt -> uiExtImages : selectCellsToUpdate();
+        uiExtImages -> uiExtImages : getSideBar();
+        uiExtImages -> imgPanel : new();
+  end
+  @enduml

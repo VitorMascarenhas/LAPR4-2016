@@ -1,0 +1,16 @@
+csheets.ext.style.StyleExtension
+csheets.ext.deptree.DependencyTreeExtension
+csheets.ext.simple.ExtensionExample
+csheets.ext.comments.CommentsExtension
+csheets.ext.manager.ExtensionManager
+csheets.ipc.ui.StartSharingExtension
+csheets.ext.contacts.ContactsExtension
+csheets.ext.agenda.AgendaExtension
+csheets.ext.importExport.ImportExportExtension
+csheets.ipc.findworkbooks.ui.FindWorkbooksExtension
+csheets.ipc.ui.sendChatMessage.SendChatMessageExtension
+csheets.lang.conditionalformat.ui.ConditionalFormatExtension
+csheets.ext.charts.ChartsExtension
+csheets.ext.contacts.ListTagsExtension
+csheets.ext.images.ImagesExtension
+csheets.ext.contacts.SearchContactsByTagsExtension

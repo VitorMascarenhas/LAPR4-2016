@@ -1,0 +1,16 @@
+@startuml doc-files/ipc04_01_Analysis_01.png
+
+actor User 
+participant "<<analysis>>\nUI" as UI
+participant "<<analysis>>\nImportUI" as impUI
+participant "<<analysis>>\nImportCtrl" as ctrl
+participant "<<analysis>>\nImportFile" as file
+participant "<<analysis>>\nSpreadSheet" as spread
+User -> UI : select import file
+UI -> impUI : open()
+impUI -> User : ask for information
+User -> impUI : choose file, delimiter and if header
+impUI -> ctrl : importFile(file,delimiter,header)
+ctrl -> file : list = importFile(file,delimiter,header)
+ctrl -> spread : copy list to cells
+@enduml

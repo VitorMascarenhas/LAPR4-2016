@@ -1,0 +1,21 @@
+@startuml doc-files/lang08_3_analysis_export.png
+actor User as u
+participant "<<analysis>>\nExportUI" as ui
+participant "<<analysis>>\nExportController" as ctrl
+participant "<<analysis>>\nFileExporter" as f
+
+u-> ui : select export option
+ui -> u : select path to save file
+alt select workbook
+    ui-> ctrl : exportWorkbook()
+else select spreadsheet
+    ui -> ctrl : exportSpreadsheet()
+else select cell
+    ui -> ctrl: exportCells()
+end
+
+ctrl -> f : exportWithAllAttributesToFile()
+
+ui -> u : success()
+
+@enduml

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <udpPort port="9001"/>
+    <tcpPort port="9002"/>
+    <server refreshRate="2000" timeout="2000" />
+</config>

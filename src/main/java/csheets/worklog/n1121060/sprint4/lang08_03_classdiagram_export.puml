@@ -1,0 +1,31 @@
+@startuml doc-files/lang08_3_classdiagram_export.png
+
+class ExportFactory{
+    + {static} ExportFactory getInstance()
+    + ExportStrategy getStategy(FileType fileType, 
+            File exportFile, 
+            String workbookTagName, 
+            String spreadsheetTagName, 
+            String cellTagName)
+}
+
+enum FileType {
+    XML 
+}
+
+abstract class ExportStrategy{
+    {abstract} void exportWorkbook(Workbook workbook)
+    {abstract} void exportSpreadsheet(Spreadsheet spreadsheet)
+    {abstract} void exportCells(Cell[][] cells)
+}
+
+class ExportXmlStrategy extends ExportStrategy{
+    + void exportWorkbook(Workbook workbook)
+    + void exportSpreadsheet(Spreadsheet spreadsheet)
+    + void exportCells(Cell[][] cells)
+}
+
+ExportFactory *-- ExportStrategy
+ExportFactory *-- FileType
+
+@enduml

@@ -1,0 +1,14 @@
+  @startuml doc-files/Rich_comments_and_history_SearchComment_Analysis_01.png
+  
+  actor User 
+  participant "<<analysis>>\nSearchCommentUI" as UI
+  participant "<<analysis>>\nSearchCommentCtrl" as ctrl
+  participant "<<analysis>>\nCommentableCell" as domain
+  participant "<<analysis>>\nComment" as domain1
+  User -> UI : run()
+  UI -> ctrl : run(String text)
+  ctrl -> domain : searchComment(String text)
+  ctrl -> domain1 : compareText(String text)
+  ctrl -> UI : returnComments()
+
+  @enduml

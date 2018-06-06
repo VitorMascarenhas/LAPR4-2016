@@ -1,0 +1,40 @@
+@startuml doc-files/core09_01_design_SD_wizard.png
+
+actor User as user
+participant "ChartUI" as ui
+participant "ChartCtrl" as ctrl
+participant "Wizard" as wzd
+participant "WizardChartCreation\nStep1" as wzddata
+participant "WizardPreviewChart\nStep2" as wzdpreview
+
+user -> ui: Charts
+activate ui
+user -> ui: Chart Wizard
+
+create ctrl
+ui -> ctrl: create()
+ui -> ctrl: startWizard(name)
+deactivate ui
+
+activate ctrl
+create wzd
+ctrl -> wzd: create()
+ctrl -> ctrl: initialize(wizard)
+
+ctrl -> wzd: addChartCreationPanel(title,message,new JPanel())
+create wzddata
+wzd -> wzddata: create(title,message,new JPanel())
+wzddata --> wzd: addPanel(wizardInsertDataPanel)
+
+ctrl -> wzd: addPreviewChartPanel(title,message,new JPanel())
+create wzdpreview
+wzd -> wzdpreview: create(title,message,new JPanel())
+wzdpreview --> wzd: addPanel(wizardPreviewChartPanel)
+
+
+ctrl -> wzd: showWizard()
+wzd -> wzd: setVisible(true)
+
+deactivate ctrl
+
+@enduml

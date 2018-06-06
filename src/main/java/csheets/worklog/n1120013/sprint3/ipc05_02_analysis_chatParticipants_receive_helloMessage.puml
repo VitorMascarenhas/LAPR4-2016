@@ -1,0 +1,20 @@
+@startuml doc-files/ipc05_02_analysis_chatParticipants_receive_helloMessage.png
+actor User as u
+  participant "<<analysis>>\nSendChatParticipantsUI" as UI
+  participant "<<analysis>>\ndataBase" as DB
+  participant "<<analysis>>\nSendChatParticipantsCtrl" as ctrl
+  participant "<<analysis>>\nConnectionManager" as conMgr
+  
+  conMgr -> ctrl : receiveHelloMessage()
+  ctrl -> DB : getusers()
+  DB --> ctrl : listusers()
+  alt userexists()
+    ctrl -> UI : setuseronline()
+  end alt
+alt !userexists()
+    ctrl -> UI : creatuser()
+    ctrl -> UI : setuseronline()
+end alt
+  ctrl -> UI : updatestatus()
+ 
+@enduml

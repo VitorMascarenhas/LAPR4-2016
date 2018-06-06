@@ -1,0 +1,31 @@
+@startuml doc-files/core03_03_auto_sorting_SD.png
+
+actor user
+participant "CustomSortDialog" as csd
+participant "column : JComboBox" as jcbc
+participant "order : JComboBox" as jcbo
+participant "cells : Cell[][]" as cls
+participant "cell : Cell" as c
+participant "asl : AutomaticSortListener" as asl
+
+user -> csd : initiate automatic sorting
+create cls
+csd -> cls : create()
+csd --> user : show options
+user -> csd : select column and order
+user -> csd : set automatic sorting
+activate csd
+csd -> jcbc : getSelectedIndex()
+csd -> jcbo : getSelectedItem()
+loop for each cell
+csd -> c : getCellListeners()
+    loop for each listener
+    alt if listener is AutomaticSortListener
+        csd -> asl: setAutomaticSort()
+    else
+        csd -> asl: resetAutomaticSortListener()
+    end
+end
+deactivate csd
+csd --> user : show sorting action
+@enduml

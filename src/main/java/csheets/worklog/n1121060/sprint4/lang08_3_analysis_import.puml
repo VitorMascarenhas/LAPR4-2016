@@ -1,0 +1,35 @@
+@startuml doc-files/lang08_3_analysis_import.png
+
+actor User as u
+participant "<<analysis>>\nExportUI" as ui
+participant "<<analysis>>\nExportController" as ctrl
+participant "<<analysis>>\nFileImporter" as f
+
+u-> ui : select import option
+ui -> u: select a file to import
+
+ui -> ctrl : loadFile()
+ctrl -> f : f = loadFile()
+ctrl -> ui : showPreview(f)
+
+u -> ui : select replace or append
+ui -> ctrl : selectOption()
+alt replace contents
+    alt import workbook
+        ctrl -> f : importAndReplaceWorkbook()
+    else import spreadsheet
+        ctrl -> f : importAndReplaceSpreadsheet()
+    else import range of cells
+        ctrl -> f : importAndReplaceCells()
+    end
+else append to existing content
+    alt import workbook
+        ctrl -> f : importAndAppendWorkbook()
+    else import spreadsheet
+        ctrl -> f : importAndAppendSpreadsheet()
+    else import range of cells
+        ctrl -> f : importAndAppendCells()
+    end
+end
+
+@enduml

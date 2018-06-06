@@ -1,0 +1,13 @@
+@startuml doc-files/crm01_03_req1.png
+actor User 
+participant System
+User -> System : select searchContatcTags in view->sidebars
+User -> System : enters a expression to search in tags
+System -> User : displays a list of contacts that match the user search
+loop
+User -> System : select a contact to edit
+System -> User : displays the current contact data
+User -> System : enter new data and confirm
+System -> User : inform about the operation sucess
+end
+@enduml

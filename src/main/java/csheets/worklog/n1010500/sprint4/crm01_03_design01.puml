@@ -1,0 +1,18 @@
+@startuml doc-files/crm01_03_design01.png
+    participant "User"
+    participant "ListTagsUI" as UI
+    User -> UI : List Tags Feature
+    create "TagsController" as ctrl
+    UI -> ctrl : create()
+    create "TagsTableModel" as table
+    UI -> table : create()
+    UI -> User : Show Tags table
+    User -> UI : addTag(tag)
+    UI -> ctrl : b = createTag(tag)
+    create "TagFactory" as TagF
+    participant "tagRepository" as rep
+    ctrl -> TagF : t = newTag(tag)
+    ctrl -> rep : b = add(t)
+    UI -> table : reloadTable()
+    UI -> User : Show new Tags table 
+@enduml

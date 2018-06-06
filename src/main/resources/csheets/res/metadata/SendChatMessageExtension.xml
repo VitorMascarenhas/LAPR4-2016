@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Extension>
+    <Name>SendChatMessageExtension</Name>
+    <Versions>
+        <VersionNumber>1.0</VersionNumber>
+        <Description>SendChatMessageExtension to send a chat message from you to someone else.</Description>
+    </Versions>
+</Extension>

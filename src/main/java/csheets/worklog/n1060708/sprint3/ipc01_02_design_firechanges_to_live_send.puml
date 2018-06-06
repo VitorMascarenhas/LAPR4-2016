@@ -1,0 +1,24 @@
+  @startuml doc-files/ipc01_02_design_firecelllistener_to_livesend.png
+  participant CellImpl as cImpl
+  participant CellListener as cListener
+  participant AutomaticSharingListener as asListener
+  participant StartSharingController as controller
+  participant Message as msg
+  participant ConnectionManager as conMng
+  loop for CellListener lst : listeners
+  	cImpl -> cListener : listener.valueChanged();
+        cListener -> asListener : valueChanged();
+        asListener -> asListener : notify();
+        cImpl -> cListener : listener.contentChanged();
+        cListener -> asListener : contentChanged();
+        asListener->asListener : notify();
+        cImpl -> cListener : listener.styleChanged();
+        cListener -> asListener : styleChanged();
+        asListener->asListener : notify();
+  end
+  asListener -> controller : liveSend(Cell);
+  controller -> controller : addCell();
+  controller -> msg : new Message();
+  msg -> controller : return;
+  controller -> conMng : send(ValueMessage);
+  @enduml

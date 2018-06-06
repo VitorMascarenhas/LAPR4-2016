@@ -1,0 +1,48 @@
+@startuml doc-files/core09_01_analysis_wizard.png
+
+actor User as user
+participant "<<analysis>>\nChartsUI" as ui
+participant "<<analysis>>\nChartsUICtrl" as uictrl
+participant "<<analysis>>\nWizardPanel" as wzp
+participant "<<analysis>>\nWizardPanel1" as wzp1
+participant "<<analysis>>\nWizardPanel2" as wzp2
+participant "<<analysis>>\nChart" as chart
+
+title : Chart Wizard
+
+user -> ui: select chart wizard
+activate ui
+
+create uictrl
+ui -> uictrl: create()
+deactivate ui
+
+create wzp
+activate uictrl
+uictrl -> wzp: create()
+uictrl -> wzp: showWizardPanel()
+activate wzp
+
+create wzp1
+wzp -> wzp1: create()
+wzp -> wzp1: show()
+note right of wzp1: fills the data related to the chart (name, range of cells, first column/row are labels?)
+
+create wzp2
+wzp -> wzp2: create()
+wzp -> wzp2: show()
+note right of wzp2: shows a chart preview (Show chart)
+
+alt if back
+wzp2 -> wzp1: back()
+else if confirm
+wzp2 -> wzp: confirm(name, range of cells, first column/row are labels?)
+wzp -> uictrl: confirm(name, range of cells, first column/row are labels?)
+end
+
+create chart
+uictrl -> chart: create(name,cellRangename, labels?)
+
+note right of chart: associates chart to the top in the of the cell range
+
+@enduml

@@ -1,0 +1,41 @@
+@startuml doc-files/ipc04_01_design_03.png
+actor User
+
+create ExportAction as ExpAct
+User -> ExpAct:  actionPerformed(ActionEvent event)
+create ExportChooser as ExpCh
+ExpAct -> ExpCh:  showDialog(...,focusOwner)
+create openJFileChooser as openJCh
+note right of ExpCh
+        The user selects a file...
+end note
+ExpCh -> openJCh: returnVal = showOpenDialog(ExportChooser.this);
+alt resultVal==JOptionPane.OK_OPTION
+    ExpCh -> openJCh : fileName = getSelectedFile().getName();
+    ExpCh -> openJCh : dir = getCurrentDirectory().toString();
+else
+end
+note right of User
+        The user enter a delimiter and if the file has a header
+end note
+create JOptionPane as JOpt
+ExpCh -> JOpt : result=showConfirmDialog(...);
+alt result==JOptionPane.YES_OPTION && delimiter != "" && fileName != ""
+    create ImportExportTextStrategy as IETStr
+    ExpCh -> IETStr : create(delimiter,dir,fileName,header);
+    ExpCh -> IETStr : ExportToTextFile(focusOwner);
+    create "writer: FileWriter" as writer
+    IETStr -> writer: create(file);
+    create FocusOwner as focus
+    IETStr -> focus : Cell[][] SelectedCells = getSelectedCells();
+    loop for Cell[] selectedCell : SelectedCells
+        loop j < selectedCell.length
+        IETStr -> writer : append(selectedCell[j].getContent());
+        end
+    end
+note right of IETStr
+        The Cells selected are exported to Text File
+end note
+else
+end
+@enduml

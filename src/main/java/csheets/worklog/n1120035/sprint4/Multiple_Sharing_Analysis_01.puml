@@ -1,0 +1,12 @@
+  @startuml doc-files/Multiple_Sharing_Analysis_01.png
+  
+  actor User 
+  participant "<<analysis>>\nStartSharingPanel" as UI
+  participant "<<analysis>>\nStartingSharingController" as ctrl
+  participant "<<analysis>>\nSharingIdentifier" as domain
+  User -> UI : start()
+  UI -> ctrl : new controller()
+  ctrl -> domain : createSharing(String name)
+  ctrl -> UI : returnSharing()
+
+  @enduml

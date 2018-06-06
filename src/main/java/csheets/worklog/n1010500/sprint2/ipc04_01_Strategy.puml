@@ -1,0 +1,32 @@
+@startuml doc-files/ipc04_01_Strategy.png
+interface ImportExportStrategy {
+    + exportToFile(SpreadsheetTable focusOwner)
+    + importFromFile(SpreadsheetTable focusOwner, UIController uiController)
+}
+
+class ImportExportTextStrategy{
+    -String delimiter
+    -String dir
+    -String filename
+    -boolean header
+    +ImportExportTextStrategy(String delimiter, String dir, String filename, boolean header)
+    +exportToFile(SpreadsheetTable focusOwner)
+    +importFromFile(SpreadsheetTable focusOwner, UIController uiController)
+    -readFile()
+}
+
+class ImportExportXMLStrategy{
+    -...
+    +exportToFile(SpreadsheetTable focusOwner)
+    +importFromFile(SpreadsheetTable focusOwner, UIController uiController)
+    +()...
+}
+
+class SpreadsheetTable{
+    + getSellectedCells()
+}
+
+ImportExportTextStrategy --|> ImportExportStrategy
+ImportExportXMLStrategy --|> ImportExportStrategy
+SpreadsheetTable *-- ImportExportStrategy
+@enduml

@@ -1,0 +1,91 @@
+  @startuml doc-files/IPC01.3_01_class_diagram.png
+
+class AutomaticSharingListener
+
+class AutomaticSharingListener extends Observable implements CellListener {
+    private StartSharingController controller;
+    private String remoteAddress;
+    public AutomaticSharingListener(String remoteAddress);
+    public void valueChanged(Cell cell);
+    public void contentChanged(Cell cell);
+    public void dependentsChanged(Cell cell);
+    public void cellCleared(Cell cell);
+    public void cellCopied(Cell cell, Cell source);
+    public void notify(Cell cell);
+    public void styleChanged(Cell cell);
+}
+
+Class CellValueObject
+
+class CellValueObject implements Serializable{
+    private Value value;
+    private Address address;
+    private Font font;
+    private int hAlignment;
+    private int vAlignment;
+    private Color fgColor;
+    private Color bgColor;
+    public CellValueObject(Cell cell);
+    public Value getValue();
+    public Address getAddress();
+    public Font getFont();
+    public int gethAlignment();
+    public int getvAlignment();
+    public Color getFgColor();
+    public Color getBgColor();
+    public int hashCode();
+    public boolean equals(Object obj);
+}
+
+Class ConnectionManager
+
+class ConnectionManager extends Observable implements Observer {
+    private static ConnectionManager instance = null;
+    private final ConfigurationManager cfg = new ConfigurationManager();
+    private UdpClient udpClient;
+    private UdpServer udpServer;
+    private TcpServer tcpServer;
+    boolean isConnected = false;
+    private Set<String> foundRemoteInstances;
+    private Map<String, TcpClientConnection> connections;
+    public static final int CONNECTED = 1;
+    public static final int FOUNDSERVER = 2;
+    protected ConnectionManager();
+    public static synchronized ConnectionManager getInstance();
+    public synchronized boolean isConnected();
+    public Set<String> foundRemoteInstances();
+    public synchronized void connect();
+    public synchronized void connectTo(String remoteAddress) throws IOException
+    public synchronized void disconnectFrom(String remoteAddress) throws IOException;
+    public synchronized void send(Message message) throws IOException;
+    public void update(Observable o, Object arg);
+    public InetAddress getLocalAddress() throws UnknownHostException;
+    public synchronized Map<String, TcpClientConnection> getConnections();
+}
+
+Class StartSharingController
+
+class StartSharingController extends FocusOwnerAction implements Observer, Serializable {
+    private UIController uiController;
+    private StartSharingPanel uiPanel;
+    private ConnectionManager conMgr;
+    private List<Cell> cellsListening;
+    private List<Object> cells;
+    private int tcpPort;
+    private int udpPort;
+    public StartSharingController(UIController uiController, StartSharingPanel uiPanel);
+    public StartSharingController();
+    public void update(Observable o, Object arg);
+    public void connectTo(String remoteAddress) throws IOException;
+    public void disConnectFrom(String remoteAddress) throws IOException;
+    public void send() throws UnknownHostException, IOException;
+    public void liveSend(Cell cell) throws UnknownHostException, IOException;
+    private void addCell(Cell cell);
+    protected String getName();
+    public void actionPerformed(ActionEvent e);
+    public void addCellListeners();
+    public void removeCellListener();
+}
+
+
+  @enduml

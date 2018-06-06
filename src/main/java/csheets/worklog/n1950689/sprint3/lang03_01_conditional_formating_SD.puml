@@ -1,0 +1,146 @@
+@startuml doc-files/lang03_01_conditional_formating_SD.png
+
+actor USER as usr
+participant "ui : ConditionalFormatPanel" as ui
+participant "ctrl : ConditionalFormatController" as ctrl
+participant "uic : UIController" as uic
+participant "c : Cell" as c
+participant "cfe : CondFormEscuta" as cfe
+participant "cf : ConditionalFormat" as cf
+participant "eec : ExcelExpressionCompiler" as eec
+participant "expr : Expression" as expr
+participant "v : Value" as v
+participant "sc : StylableCell" as sc
+
+usr -> ui : start cell conditional format
+activate ui
+create ctrl
+ui -> ctrl : create()
+ui --> usr : ask COLOR
+usr -> ui : insert COLOR
+    ui -> ctrl : setBackgroundColor("TRUE",COLOR)
+    activate ctrl
+        ctrl -> uic : getActiveCell()
+        uic -> c : getCellListeners()
+        loop each cell listener
+            alt if listener is CondFormEscuta
+                ctrl -> cfe : getConditionalFormat()
+                alt if cf == null
+                    create cf
+                    ctrl -> cf : create()
+                end
+                alt if condition is "TRUE"
+                    ctrl -> cf : setTrueStyleBackgroundColor(COLOR)
+                else
+                    ctrl -> cf : setFalseStyleBackgroundColor(COLOR)
+                end
+            end
+        end
+    deactivate ctrl   
+ui --> usr : ask FONT
+usr -> ui : insert FONT
+    ui -> ctrl : setFont("TRUE",FONT)
+    activate ctrl
+        ctrl -> uic : getActiveCell()
+        uic -> c : getCellListeners()
+        loop each cell listener
+            alt if listener is CondFormEscuta
+                ctrl -> cfe : getConditionalFormat()
+                alt if cf == null
+                    create cf
+                    ctrl -> cf : create()
+                end
+                alt if condition is "TRUE"
+                    ctrl -> cf : setTrueStyleFont(FONT)
+                else
+                    ctrl -> cf : setFalseStyleFont(FONT)
+                end
+            end
+        end
+    deactivate ctrl   
+ui --> usr : ask BORDER
+usr -> ui : insert BORDER
+    ui -> ctrl : setBorder("TRUE",BORDER)
+    activate ctrl
+        ctrl -> uic : getActiveCell()
+        uic -> c : getCellListeners()
+        loop each cell listener
+            alt if listener is CondFormEscuta
+                ctrl -> cfe : getConditionalFormat()
+                alt if cf == null
+                    create cf
+                    ctrl -> cf : create()
+                end
+                alt if condition is "TRUE"
+                    ctrl -> cf : setTrueStyleBorder(BORDER)
+                else
+                    ctrl -> cf : setFalseStyleBorder(BORDER)
+                end
+            end
+        end
+    deactivate ctrl   
+usr -> ui : apply condition settings
+ui -> ctrl : setConditionValue(CONDITION)
+    activate ctrl
+        ctrl -> uic : getActiveCell()
+        uic -> c : getCellListeners()
+        loop each cell listener
+            alt if listener is CondFormEscuta
+                ctrl -> cfe : getConditionalFormat()
+                alt if cf == null
+                    create cf
+                    ctrl -> cf : create()
+                    ctrl -> cfe : setConditionalFormat(cf)
+                end
+                ctrl -> cfe : setCondition(CONDITION)
+                activate cfe
+                cfe -> cfe : evaluate()
+                activate cfe
+                create eec
+                cfe -> eec : create()
+                activate eec
+                cfe -> eec : compile(CELL,CONDITION)
+                eec --> cfe : expr
+                deactivate eec
+                cfe -> expr : evaluate()
+                activate expr
+                create v
+                expr -> v : create
+                expr --> cfe : v
+                deactivate expr
+                cfe --> cfe : v
+                deactivate cfe
+                cfe -> cfe : syle(v)
+                activate cfe
+                alt if v == TRUE
+                cfe -> cf : setStyleFormat(TRUE)
+                activate cf
+                create sc
+                cf -> sc : create()
+                cf -> sc : setBackgroundColor()
+                cf -> sc : setFont()
+                cf -> sc : setBorder()
+               deactivate cf
+                else else
+                cfe -> cf : setStyleFormat(FALSE)
+                activate cf
+                create sc
+                cf -> sc : create()
+                cf -> sc : setBackgroundColor()
+                cf -> sc : setFont()
+                cf -> sc : setBorder()
+                deactivate cf
+                end
+                cf -> sc : getCellListeners()
+                 loop each cell listener
+                   cf -> sc : valueChanged(sc)
+                   cf -> sc : styleChanged(c)
+                end
+                deactivate cfe
+                deactivate cfe
+            end
+        end
+    deactivate ctrl   
+deactivate ui
+
+@enduml

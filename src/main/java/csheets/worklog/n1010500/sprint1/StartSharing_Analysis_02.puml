@@ -1,0 +1,23 @@
+  @startuml doc-files/StartSharing_Analysis_02.png
+  
+  actor User 
+  participant "<<analysis>>\nStartSharingUI" as UI
+  participant "<<analysis>>\nStartSharingCtrl" as ctrl
+  participant "<<analysis>>\nSpreadsheet" as sheet
+  participant "<<analysis>>\nCell" as cell  
+  participant "<<analysis>>\nSidebar" as bar
+  participant "<<analysis>>\nTCP Client" as client
+  User -> UI : SelectCell()
+  UI -> ctrl : getCellValue()
+  ctrl -> sheet : getCell()
+  ctrl -> cell : getContent()
+  User -> UI : SelectServer()
+  UI -> ctrl : SelectServer()
+  ctrl -> bar : getValue()
+  ctrl -> client : connect()
+  client -> ctrl : response()
+  ctrl -> UI : response()
+  User -> UI : send()
+  UI -> ctrl : send()
+  ctrl -> client : send()  
+  @enduml

@@ -1,0 +1,30 @@
+@startuml doc-files/core01_01_enable_disable_extensions_CD.png
+
+class "ExtensionManagerPanel" as EMpanel
+class "UIController" as UICtrl
+class "em : ExtensionManager" as ExtMngr
+class "extensionMap : SortedMap<String, Extension>" as extMap
+class "extensions : Collection<Extension>" as Coll
+class "ext : Extensions[]" as ext 
+class "cpnt : Component" as cpnt
+class "uie : UIExtension" as uie
+class "e : Extension" as e1 
+class "m : JMenu" as menu
+class "tb : JToolbar" as tb 
+
+EMpanel ..> UICtrl
+UICtrl ..> ExtMngr
+ExtMngr ..> extMap
+ExtMngr ..> Coll
+Coll ..> ext
+EMpanel ..> cpnt
+EMpanel ..> uie
+uie ..> e1
+EMpanel ..> menu
+EMpanel ..>tb
+
+
+
+
+@enduml
+

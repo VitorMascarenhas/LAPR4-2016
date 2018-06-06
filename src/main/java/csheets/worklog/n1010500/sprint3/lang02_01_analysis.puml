@@ -1,0 +1,18 @@
+  @startuml doc-files/lang02_01_analysis.png
+ interface Expression {
+      
+    }
+    class TemporalVariable {
+    
+    }
+    class Reference {
+
+    }
+    class CellReference {
+    }
+
+    Expression <|-- Reference
+    Expression <|-- TemporalVariable
+    Reference <|-- CellReference
+    
+  @enduml

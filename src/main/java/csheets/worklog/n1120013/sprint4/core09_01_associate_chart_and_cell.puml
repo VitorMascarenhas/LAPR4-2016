@@ -1,0 +1,22 @@
+@startuml doc-files/core09_01_associate_chart_and_cell.png
+
+actor User as user
+participant "Wizard" as wzd
+participant "ChartController" as ctrl
+participant "ChartableCell" as chartcell
+participant "Cell" as cell
+
+activate ctrl
+activate wzd
+user -> wzd: chart wizard
+
+wzd -> ctrl: createChartableCell() 
+create chartcell
+ctrl -> chartcell: createChartableCell()
+
+wzd -> ctrl: setChart(chartableCell,chart) 
+
+ctrl -> cell: setChart(chartableCell, chart)
+cell -> cell: setChart(chart)
+
+@enduml

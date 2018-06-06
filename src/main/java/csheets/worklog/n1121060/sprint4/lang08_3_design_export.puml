@@ -1,0 +1,38 @@
+@startuml doc-files/lang08_3_design_export.png
+
+actor User as u
+participant "MenuBar : JMenuBar" as menu
+participant "ExportFileAction : BaseAction" as action
+participant "ExportFilePanel : JPanel" as panel
+participant "ExportFileController :F ocusOwnerAction" as ctrl
+participant "ExportFactory" as fac
+participant "ExportXmlStrategy : ExportStrategy" as xml
+
+create action
+    menu -> action : create(app, uiController)
+
+u->menu : select Export
+
+create panel
+    action -> panel : create(uiController, jDialog)
+
+create ctrl
+    panel -> ctrl : create(uiController, this)
+
+ctrl -> fac : factory = getInstance()
+ctrl -> fac : exportStrategy = factory.getStrategy(fileType)
+
+alt file type xml
+    create xml
+        fac -> xml : create()
+end
+
+alt select workbook
+    panel-> ctrl : exportWorkbook()
+else select spreadsheet
+    panel -> ctrl : exportSpreadsheet()
+else select cell
+    panel -> ctrl: exportCells()
+end
+
+@enduml

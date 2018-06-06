@@ -1,0 +1,16 @@
+  @startuml doc-files/core09_01_extension_setup.png
+  participant "uic : UIController" as UIC
+  participant ExtensionManager as ExtMan
+  participant "extension : ChartsExtension" as ExtChart
+  participant "uiExtension : UIExtensionCharts" as UIExt
+  UIC -> ExtMan : extensions=getExtensions();
+  loop for Extension ext : extensions
+  	UIC -> ExtChart : uiExtension=getUIExtension(this);
+  	activate ExtChart
+  	create UIExt
+  	ExtChart -> UIExt : new(extension, uic)
+  	deactivate ExtChart
+  	deactivate UIExt
+  	UIC -> UIC : uiExtensions.add(uiExtension);
+  end
+  @enduml

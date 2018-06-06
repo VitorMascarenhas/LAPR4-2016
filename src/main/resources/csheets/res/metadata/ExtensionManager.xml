@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Extension>
+    <Name>ExtensionManager</Name>
+    <Versions>
+        <VersionNumber>1.0</VersionNumber>
+        <Description>ExtensionManager for managing the extensions</Description>
+    </Versions>
+</Extension>

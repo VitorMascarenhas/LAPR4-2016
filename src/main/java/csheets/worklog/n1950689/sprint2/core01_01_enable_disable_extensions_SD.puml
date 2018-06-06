@@ -1,0 +1,67 @@
+@startuml doc-files/core01_01_enable_disable_extensions_SD.png
+actor User
+participant "ExtensionManagerPanel" as EMpanel
+participant "UIController" as UICtrl
+participant "em : ExtensionManager" as ExtMngr
+participant "extensionMap : SortedMap<String, Extension>" as extMap
+participant "extensions : Collection<Extension>" as Coll
+participant "ext : Extensions[]" as ext 
+participant "cpnt : Component" as cpnt
+participant "uie : UIExtension" as uie
+participant "e : Extension" as e1 
+participant "m : JMenu" as menu
+participant "tb : JToolbar" as tb
+
+User -> EMpanel : initiate extensions manager
+activate EMpanel
+    EMpanel -> UICtrl : getExtensions()
+    activate UICtrl
+        UICtrl -> ExtMngr : em=getInstance()
+        UICtrl -> ExtMngr : getExtensions()
+        activate ExtMngr
+            ExtMngr -> extMap : values()
+            ExtMngr -> Coll : toArray()
+            activate Coll
+                create ext
+                Coll -> ext : create()
+            deactivate Coll
+            ExtMngr --> UICtrl : ext
+        deactivate ExtMngr
+        UICtrl --> EMpanel : ext
+    deactivate UICtrl
+    loop for each extension
+        alt if enabled
+            EMpanel --> User : show enabled extensions
+        else disabled
+            EMpanel --> User : show disabled extensions
+        end
+    end
+User -> EMpanel : select active extensions
+alt Continue Operation
+    EMpanel -> EMpanel : getChecked()
+    activate EMpanel
+        EMpanel -> EMpanel : getComponents()
+        activate EMpanel
+            loop for each  Component
+                EMpanel -> cpnt : isSelected()
+                EMpanel -> uie : getExtension()
+                activate uie
+                uie -> e1 : getPropertyKey()
+                deactivate uie
+                alt if Component selected
+                    EMpanel -> uie : setEnabledProperty(propKey,true)
+                    EMpanel -> menu : setEnabled(true)
+                    EMpanel -> tb : setEnabled(true)
+                else Component not selected
+                    EMpanel -> uie : setEnabledProperty(propKey,false)
+                    EMpanel -> menu : setEnabled(false)
+                    EMpanel -> tb : setEnabled(false)
+                end
+            end
+        deactivate EMpanel
+    deactivate EMpanel
+else Cancel Operation
+    EMpanel --> User : Operation Canceled and Exit
+end
+deactivate EMpanel
+@enduml

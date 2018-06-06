@@ -1,0 +1,25 @@
+@startuml doc-files/core03_02_analysis_sort_range_cells.png
+actor User as u
+participant "<<analysis>>\nSheetUI" as sheet
+participant "<<analysis>>\nSortUI" as d
+
+participant "<<analysis>>\nCustomSortAction" as sa
+
+
+u->sheet : selectRange()
+
+note right of u
+        User right clicks on the spreadsheet
+end note
+
+d->u : showOptions()
+
+u->d : selectColumn()
+u->d : selectSortDirection()
+u->d : sort()
+
+d->sa : sort()
+
+sa -> sheet : showSortResult()
+
+@enduml

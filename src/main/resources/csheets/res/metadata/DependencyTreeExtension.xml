@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Extension>
+    <Name>DependencyTreeExtension</Name>
+    <Versions>
+        <VersionNumber>1.0</VersionNumber>
+        <Description>DependencyTreeExtension to check the tree dependency</Description>
+    </Versions>
+	<Versions>
+        <VersionNumber>1.1</VersionNumber>
+        <Description>DependencyTreeExtension with new graphic design</Description>
+    </Versions>
+</Extension>

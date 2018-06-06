@@ -1,0 +1,13 @@
+  @startuml doc-files/StartSharing_Analysis_03.png
+  
+  participant "<<analysis>>\nStartSharingUI" as UI
+  participant "<<analysis>>\nStartSharingCtrl" as ctrl
+  participant "<<analysis>>\nTCP Client" as client  
+  participant "<<analysis>>\nSpreadsheet" as sheet
+  participant "<<analysis>>\nCell" as cell  
+  
+  client -> ctrl : receive()
+  ctrl -> sheet : getCell()
+  ctrl -> cell : setValue()
+  ctrl -> UI : refresh()
+  @enduml

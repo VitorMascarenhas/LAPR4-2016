@@ -1,0 +1,45 @@
+@startuml doc-files/ipc02_1_analysis_find_workbook_SD.png
+
+actor User
+participant "<<analysis>>\nExtensionSearchWorkbookUI" as ESWUI
+participant "<<analysis>>\n<<observer>>\nExtensionSearchWorkbookController" as ESWCtrl
+participant "<<analysis>>\n<<observerable>>\nSearchExtension" as SE
+participant "path : Path" as p
+participant "f : File" as f
+participant "Spreadsheet" as Ss
+
+
+User -> ESWUI : initiate search workbook extension
+activate ESWUI
+    ESWUI --> User : ask search root directory
+    User -> ESWUI  : insert search root directory
+    create ESWCtrl
+    ESWUI -> ESWCtrl : create()
+    ESWUI -> ESWCtrl : searchWorkbook(rootDir)
+    activate ESWCtrl
+        ESWCtrl -> SE : searchExtension(rootDir)
+            activate SE
+            create p
+            SE -> p : create()
+            SE -> p : toFile()
+            activate p
+                create f
+                p -> f : create()
+                p --> SE : f
+            deactivate p
+            SE --> ESWUI : f
+            deactivate SE
+    deactivate ESWCtrl
+ESWUI --> User : show file found
+ESWUI --> User : search complete
+opt File selected
+        User -> ESWUI : select file
+        ESWUI -> ESWCtrl : loadWorkBook(f)
+        activate ESWCtrl
+            ESWCtrl -> Ss : load(f)
+            ESWCtrl --> ESWUI : update workbook loaded
+        deactivate ESWCtrl
+ESWUI --> User : show opened Workbook
+deactivate ESWUI
+end
+@enduml

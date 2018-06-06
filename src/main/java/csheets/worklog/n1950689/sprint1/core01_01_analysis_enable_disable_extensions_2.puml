@@ -1,0 +1,36 @@
+@startuml doc-files/core01_01_analysis_enable_disable_extensions_2.png
+actor User
+participant "EnableDisableExtensionUI" as ED_ExtUI
+participant "EnableDisableExtensionController" as ED_ExtCTRL
+participant "em : ExtensionManager" as ExtMngr
+participant "extensionMap : SortedMap<String, Extension>" as extMap
+participant "extensions : Collection<Extension>" as Coll
+participant "ext : Extensions[]" as ext
+
+User -> ED_ExtUI : initiate extensions manager
+    activate ED_ExtUI
+ED_ExtUI -> ED_ExtCTRL : getExtensions()
+        activate ED_ExtCTRL
+ED_ExtCTRL -> ExtMngr : em=getInstance()
+ED_ExtCTRL -> ExtMngr : getExtensions()
+            activate ExtMngr
+ExtMngr -> extMap : values()
+ExtMngr -> Coll : toArray()
+                activate Coll
+create ext
+Coll -> ext : create()
+                deactivate Coll
+ExtMngr -> ED_ExtCTRL : ext
+            deactivate ExtMngr
+ED_ExtCTRL -> ED_ExtUI : ext
+        deactivate ED_ExtCTRL
+    loop for each extension
+        alt if enabled
+            ED_ExtUI -> User : show enabled extensions
+        else if disabled
+            ED_ExtUI -> User : show disabled extensions
+        end
+    end
+    deactivate ED_ExtUI
+
+@enduml

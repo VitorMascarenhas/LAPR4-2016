@@ -1,0 +1,11 @@
+@startuml doc-files/ipc04_01_ssd_02.png
+  
+actor User 
+participant "System" as sys
+User -> sys : selects the "Export Text File" feature
+sys -> User : The System asks for information
+User -> sys : The user enter information
+sys -> User : The System shows all information and ask for confirmation
+User -> sys : The User confirm de Importation
+sys -> User : The System export selected cells to the Text File
+@enduml

@@ -1,0 +1,15 @@
+  @startuml doc-files/StartSharing_Analysis_01.png
+  
+  actor User 
+  participant "<<analysis>>\nStartSharingUI" as UI
+  participant "<<analysis>>\nStartSharingCtrl" as ctrl
+  participant "<<analysis>>\nUdpServer" as srv
+  participant "<<analysis>>\nUdpClient" as cli
+  participant "<<analysis>>\nSidebar" as bar
+  User -> UI : run()
+  UI -> ctrl : run()
+  ctrl -> srv : start()
+  ctrl -> cli : start()
+  cli -> ctrl : addRemoteInstance()
+  ctrl -> bar : add()
+  @enduml
